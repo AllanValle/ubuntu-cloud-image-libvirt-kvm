@@ -1,0 +1,5 @@
+instance-id: gem5ubuntufocal
+local-hostname: gem5ubuntufocal
+
+network-interfaces: |
+  iface enp1s0 inet dhcp

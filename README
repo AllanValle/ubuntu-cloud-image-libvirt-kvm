@@ -1,0 +1,54 @@
+Minimal Example: Create Ubuntu VM from cloud-image in Libvirt/KVM
+==
+
+Purpose
+--
+It is quite cumbersome installing and configuring the OS each time we want install a VM. In order to avoid this, a preinstalled OS image can be saved in the QEMU hard disk and 
+a configuration image can be saved in the QEMU CDROM.
+To create configuration image we use cloud-init[https://cloudinit.readthedocs.io/en/latest/], which is supported by ubuntu cloud images.
+
+Steps
+--
+Clone this repository
+
+Install the necessary dependencies:
+````bash
+sudo apt install qemu qemu-kvm qemu-utils libvirt-daemon libvirt-clients
+   bridge-utils virt-manager
+sudo apt install libvirt-daemon-system virtinst
+````
+
+Set the correct permissions for Libvirt
+````bash
+sudo cp -rv /etc/libvirt/libvirt.conf ~/.config/libvirt/ &&\
+sudo chown ${USER}:${GROUP} ~/.config/libvirt/libvirt.conf
+````
+
+ Uncomment the line uri_default = "qemu:///system" to be able to run
+virsh without sudo.
+
+Save and apply the configuration
+````bash
+sudo systemctl restart libvirtd
+````
+
+Download OS image from https://cloud-images.ubuntu.com/
+ Create the configuration image
+````bash
+genisoimage -output cidata.iso -V cidata -r -J user-data meta-data
+````
+
+Install the VM
+````bash
+virt-install --name=gem5ubuntufocal --ram=2048 --vcpus=1 --import --disk path=gem5ubuntufocal.img,format=qcow2 --disk path=cidata.iso,device=cdrom --os-variant=ubuntu20.04 --network bridge=virbr0,model=virtio --noautoconsole --nographics
+````
+
+Verify that the DHCP server in the host is leasing an ip address
+````bash
+virsh net-dhcp-leases default
+````
+
+Access the VM through SSH
+````bash
+ssh user@{IP-ADDRESS}
+````

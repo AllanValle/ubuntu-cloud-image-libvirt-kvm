@@ -1,0 +1,11 @@
+#cloud-config
+password: password
+hostname: gem5ubuntufocal
+chpasswd: { expire: False }
+ssh_pwauth: True
+ssh_authorized_keys:
+  - ssh-rsa ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJ88upzm4XEwH+X069Y4cujoPE0wqNtPZCBWhuzhV4hlCbJaaXxtYg04Ua30JGMmBaNJaRhtOy1EW8vYwGdvxgHRB6gj8V1I27WCY5moa5XC5SKzRhbuK2ml6dUkx0H3GhCqVYJIUNL7GUrtmPNKVfGydrryyBMNcRFu5M19j04n5Ndo1wTjytlskFkitCAeHCiZG9MoH3QVQrZOFRSaxxNlLOJYDxxuBRvqWv1moxATMHMWot+TlrwqVr1yz1R0UH7ikEMAFhcs7WGabkz+uzdLe8a3u0y3sEIsEF88mLkznEojlfI+ITRVmhUE3pC7L3auQOzBtv86qhYsi8nl6HbQU9DgfOBr5d9wXA3PAab1dZzcqwIEF1whPddpBlnzSERKgys3X2hzUnlePCprm5CSUcdB4alHRQCMHcgWLF0tmtAuFlVVFYokC0IluNXYo3qhLRpTItOV7qRtP4F070N1x06CvL94RCEH+wfjaJClyMV3qgM/9q4gh0FQRhcVM= allan@allanLenovo 
+
+runcmd:
+  - [ sh, -c, echo "=========hello world'=========" ]
+
